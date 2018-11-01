@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.UUID;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 public class QuestionServiceTest {
@@ -17,7 +19,7 @@ public class QuestionServiceTest {
     private QuestionService questionService;
 
     @Test
-    public void testFindById(){
+    public void testFindById() {
         Question q = questionService.find(1);
 
         Assert.assertNotNull(q);
@@ -36,7 +38,7 @@ public class QuestionServiceTest {
     }
 
     @Test
-    public void testUpdate(){
+    public void testUpdate() {
         Question q = questionService.find(1);
         q.setOptions("Patriots");
 
@@ -44,9 +46,14 @@ public class QuestionServiceTest {
     }
 
     @Test
-    public void testRandom(){
-        Question q = questionService.getRandom("");
-        Assert.assertNotNull(q);
-        System.out.println(q);
+    public void testRandom() {
+//        String uuid = UUID.randomUUID().toString();
+        String uuid = "fb09c589-6214-4362-a063-e4af295d0b28";
+
+        Question q = questionService.getRandom(uuid);
+
+//        Assert.assertNotNull(q);
+//        System.out.println(q);
+        Assert.assertNull(q);
     }
 }

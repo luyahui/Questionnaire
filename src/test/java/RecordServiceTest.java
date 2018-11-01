@@ -21,7 +21,7 @@ public class RecordServiceTest {
     private RecordService recordService;
 
     @Test
-    public void testSave(){
+    public void testSave() {
         Record record = new Record();
         String uuid = UUID.randomUUID().toString();
 
@@ -31,5 +31,21 @@ public class RecordServiceTest {
 
         Assert.assertNotNull(recordService.save(record));
 
+    }
+
+    @Test
+    public void testExists() {
+//        String uuid = UUID.randomUUID().toString();
+        String uuid = "fb09c589-6214-4362-a063-e4af295d0b28";
+        long qid = 1;
+
+        Assert.assertTrue(recordService.exists(uuid, qid));
+    }
+
+    @Test
+    public void testFindByUuid(){
+
+        String uuid = "fb09c589-6214-4362-a063-e4af295d0b28";
+        Assert.assertEquals(recordService.findByUuid(uuid, 0, 10).size(), 1);
     }
 }

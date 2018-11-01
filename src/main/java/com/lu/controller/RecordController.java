@@ -7,12 +7,14 @@ import com.lu.model.Record;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.websocket.server.PathParam;
+import java.nio.file.Path;
+import java.util.List;
 
 @RestController
+@RequestMapping(path = "/record")
 public class RecordController {
 
     @Autowired
@@ -33,5 +35,21 @@ public class RecordController {
         recordService.save(record);
 
         return new ResponseEntity<>(record, HttpStatus.CREATED);
+    }
+
+    @GetMapping(path = "/uuid/{uuid}")
+    public ResponseEntity<Iterable> getByUuid(@PathVariable(name = "uuid") String uuid, @RequestParam(name = "pageNo", defaultValue = "0") int pageNo, @RequestParam(name = "pageSize", defaultValue = "10") int pageSize){
+        List<Record> records = recordService.findByUuid(uuid, pageNo, pageSize);
+        if (records.size() == 0)
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return new ResponseEntity(records, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/qid/{qid}")
+    public ResponseEntity<Iterable> getByQid(@PathVariable(name = "qid") long qid, @RequestParam(name = "pageNo", defaultValue = "0") int pageNo, @RequestParam(name = "pageSize", defaultValue = "10") int pageSize){
+        List<Record> records = recordService.findByQid(qid, pageNo, pageSize);
+        if (records.size() == 0)
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return new ResponseEntity(records, HttpStatus.OK);
     }
 }
