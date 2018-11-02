@@ -30,10 +30,24 @@ public class QuestionServiceTest {
     @Test
     public void testSave() {
         Question q = new Question();
-        q.setType(QuestionType.TRIVIA);
-        q.setDescription("Which team won the 2017 super bowl?");
-        q.setOptions("Falcons" + "\n" + "Patriots");
+//        q.setType(QuestionType.TRIVIA);
+//        q.setDescription("Which team won the 2017 super bowl?");
+//        q.setOptions("Falcons" + "\n" + "Patriots");
+//        q.setCorrectOption("Patriots");
 
+//        q.setType(QuestionType.POLL);
+//        q.setDescription("What's your favorite car brand?");
+//        q.setOptions("Nissan\n" + "Honda\n" + "Audi\n" + "BMW");
+
+//        q.setType(QuestionType.CHECKBOX);
+//        q.setDescription("What are the colors do you like?");
+//        q.setOptions("Red\n" + "Blue\n" + "Yellow\n" + "Green\n" + "Black\n" + "Purple");
+
+        q.setType(QuestionType.MATRIX);
+        q.setDescription("Please tell us a bit about yourself");
+        q.setOptions("Age\t<18\t18 to 35\t35 to 55\t>55\n" +
+                "Gender\tMale\tFemale\n" +
+                "Income(per year)\t<55000\t55000 to 85000\t85000 to 105000\t>105000");
         Assert.assertNotNull(questionService.save(q));
     }
 
@@ -52,8 +66,8 @@ public class QuestionServiceTest {
 
         Question q = questionService.getRandom(uuid);
 
-//        Assert.assertNotNull(q);
+        Assert.assertNotNull(q);
 //        System.out.println(q);
-        Assert.assertNull(q);
+//        Assert.assertNull(q);
     }
 }

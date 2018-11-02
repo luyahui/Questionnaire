@@ -15,45 +15,45 @@ public class QuestionController {
     private QuestionService questionService;
 
     @GetMapping(path = "/random")
-    public ResponseEntity<Question> getAQuestion(@RequestParam(name = "uuid", defaultValue = "") String uuid){
+    public ResponseEntity<Question> getAQuestion(@RequestParam(name = "uuid", defaultValue = "") String uuid) {
         Question q = questionService.getRandom(uuid);
-        if(q != null)
+        if (q != null)
             return new ResponseEntity<Question>(q, HttpStatus.OK);
         else
             return new ResponseEntity<Question>(q, HttpStatus.NO_CONTENT);
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Question> getById(@PathVariable(name = "id") long id){
+    public ResponseEntity<Question> getById(@PathVariable(name = "id") long id) {
         Question q = questionService.find(id);
-        if(q != null)
+        if (q != null)
             return new ResponseEntity<Question>(q, HttpStatus.OK);
         else
             return new ResponseEntity<Question>(q, HttpStatus.NO_CONTENT);
     }
 
     @PostMapping(path = "/add")
-    public HttpStatus addNewQuestion(@RequestBody Question nQuestion){
-        if(questionService.save(nQuestion) != null)
+    public HttpStatus addNewQuestion(@RequestBody Question nQuestion) {
+        if (questionService.save(nQuestion) != null)
             return HttpStatus.CREATED;
         else
             return HttpStatus.BAD_REQUEST;
     }
 
     @PutMapping(path = "/edit/{id}")
-    public HttpStatus updateQuestion(@PathVariable(name = "id") long id, @RequestBody Question question){
-        if(!questionService.exists(id))
+    public HttpStatus updateQuestion(@PathVariable(name = "id") long id, @RequestBody Question question) {
+        if (!questionService.exists(id))
             return HttpStatus.BAD_REQUEST;
         question.setId(id);
-        if(questionService.save(question) != null)
+        if (questionService.save(question) != null)
             return HttpStatus.OK;
         else
             return HttpStatus.BAD_REQUEST;
     }
 
     @DeleteMapping(path = "/delete/{id}")
-    public HttpStatus deleteQuestion(@PathVariable(name = "id") long id){
-        if(!questionService.exists(id))
+    public HttpStatus deleteQuestion(@PathVariable(name = "id") long id) {
+        if (!questionService.exists(id))
             return HttpStatus.BAD_REQUEST;
         questionService.delete(id);
         return HttpStatus.OK;

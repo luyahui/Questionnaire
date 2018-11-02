@@ -18,6 +18,17 @@ public class Question {
     @Column(nullable = false)
     private String options;
 
+    @Column
+    private String correctOption;
+
+    public String getCorrectOption() {
+        return correctOption;
+    }
+
+    public void setCorrectOption(String correctOption) {
+        this.correctOption = correctOption;
+    }
+
     public String getType() {
         return type;
     }
