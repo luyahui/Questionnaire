@@ -46,6 +46,6 @@ public class RecordServiceTest {
     public void testFindByUuid(){
 
         String uuid = "fb09c589-6214-4362-a063-e4af295d0b28";
-        Assert.assertEquals(recordService.findByUuid(uuid, 0, 10).size(), 1);
+        Assert.assertEquals(recordService.findByUuid(uuid, 0, 10).getContent().size(), 1);
     }
 }

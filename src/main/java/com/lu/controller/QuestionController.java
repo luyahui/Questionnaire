@@ -3,6 +3,7 @@ package com.lu.controller;
 import com.lu.service.QuestionService;
 import com.lu.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,14 @@ public class QuestionController {
             return new ResponseEntity<Question>(q, HttpStatus.OK);
         else
             return new ResponseEntity<Question>(q, HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping(path = "/all")
+    public ResponseEntity<Iterable> getAll(@RequestParam(name = "pageNo", defaultValue = "0") int pageNo, @RequestParam(name = "pageSize", defaultValue = "10") int pageSize){
+        Page<Question> questions = questionService.findAll(pageNo, pageSize);
+        if(!questions.hasContent())
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return new ResponseEntity(questions, HttpStatus.OK);
     }
 
     @PostMapping(path = "/add")

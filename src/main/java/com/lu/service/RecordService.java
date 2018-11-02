@@ -4,10 +4,9 @@ import com.lu.model.Record;
 import com.lu.repository.QuestionRepository;
 import com.lu.repository.RecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class RecordService {
@@ -28,11 +27,11 @@ public class RecordService {
         return recordRepository.existsByUuidAndQuestion(uuid, questionRepository.findById(qid).get());
     }
 
-    public List<Record> findByUuid(String uuid, int pageNo, int pageSize){
+    public Page<Record> findByUuid(String uuid, int pageNo, int pageSize){
         return recordRepository.findByUuid(uuid, PageRequest.of(pageNo,pageSize));
     }
 
-    public List<Record> findByQid(long qid, int pageNo, int pageSize){
+    public Page<Record> findByQid(long qid, int pageNo, int pageSize){
         if(!questionRepository.existsById(qid))
             return null;
         return recordRepository.findByQuestion(questionRepository.findById(qid).get(), PageRequest.of(pageNo, pageSize));
