@@ -42,29 +42,29 @@ public class QuestionController {
     }
 
     @PostMapping(path = "/add")
-    public HttpStatus addNewQuestion(@RequestBody Question nQuestion) {
+    public ResponseEntity addNewQuestion(@RequestBody Question nQuestion) {
         if (questionService.save(nQuestion) != null)
-            return HttpStatus.CREATED;
+            return new ResponseEntity(HttpStatus.CREATED);
         else
-            return HttpStatus.BAD_REQUEST;
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping(path = "/edit/{id}")
-    public HttpStatus updateQuestion(@PathVariable(name = "id") long id, @RequestBody Question question) {
+    public ResponseEntity updateQuestion(@PathVariable(name = "id") long id, @RequestBody Question question) {
         if (!questionService.exists(id))
-            return HttpStatus.BAD_REQUEST;
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         question.setId(id);
         if (questionService.save(question) != null)
-            return HttpStatus.OK;
+            return new ResponseEntity(HttpStatus.OK);
         else
-            return HttpStatus.BAD_REQUEST;
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
     @DeleteMapping(path = "/delete/{id}")
-    public HttpStatus deleteQuestion(@PathVariable(name = "id") long id) {
+    public ResponseEntity deleteQuestion(@PathVariable(name = "id") long id) {
         if (!questionService.exists(id))
-            return HttpStatus.BAD_REQUEST;
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         questionService.delete(id);
-        return HttpStatus.OK;
+        return new ResponseEntity(HttpStatus.OK);
     }
 }
